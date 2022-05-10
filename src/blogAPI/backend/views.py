@@ -14,7 +14,51 @@ from django.http import Http404
 from rest_framework import mixins
 from rest_framework import generics
 
+from rest_framework import viewsets
 
+
+class ArticleViewSet(viewsets.ViewSet):
+
+    def get_object(self, slug):
+        try:
+            return Article.objects.get(slug=slug)
+        except Article.DoesNotExist:
+            raise Http404
+
+    def list(self, request):
+        articles = Article.objects.all()
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        serializer = ArticleSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk):
+        slug = pk
+        article = self.get_object(slug)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
+
+    def update(self, request, pk):
+        article = self.get_object(pk)
+        serializer = ArticleSerializer(article, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk):
+        article = self.get_object(pk)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# Generic Class Based API Views
+'''
 class ArticlesList(generics.ListCreateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
@@ -25,7 +69,7 @@ class ArticleDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ArticleSerializer
 
     lookup_field = 'slug'
-
+'''
 
 # Mixins
 '''
