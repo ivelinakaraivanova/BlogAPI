@@ -15,6 +15,20 @@ from rest_framework import mixins
 from rest_framework import generics
 
 
+class ArticlesList(generics.ListCreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+
+class ArticleDetails(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    lookup_field = 'slug'
+
+
+# Mixins
+'''
 class ArticlesList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
@@ -41,7 +55,7 @@ class ArticleDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
 
     def delete(self, request, slug):
         return self.destroy(request, slug=slug)
-
+'''
 
 
 # Class Based API Views
