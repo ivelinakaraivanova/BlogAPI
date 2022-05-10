@@ -11,8 +11,41 @@ from rest_framework import status
 
 from rest_framework.views import APIView
 from django.http import Http404
+from rest_framework import mixins
+from rest_framework import generics
 
 
+class ArticlesList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+class ArticleDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin,
+                     mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+
+    lookup_field = 'slug'
+
+    def get(self, request, slug, *args, **kwargs):
+        return self.retrieve(request, slug=slug)
+
+    def put(self, request, slug, *args, **kwargs):
+        return self.update(request, slug=slug)
+
+    def delete(self, request, slug):
+        return self.destroy(request, slug=slug)
+
+
+
+# Class Based API Views
+'''
 class ArticlesList(APIView):
 
     def get(self, request):
@@ -52,7 +85,9 @@ class ArticleDetails(APIView):
         article = self.get_object(slug)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
 
+# API View Decorator
 '''
 @api_view(['GET', 'POST'])
 def articles_list(request):
@@ -92,6 +127,7 @@ def article_details(request, slug):
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
 '''
 
+# Function Based API Views
 '''
 @csrf_exempt
 def articles_list(request):
