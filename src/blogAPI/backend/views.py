@@ -17,6 +17,17 @@ from rest_framework import generics
 from rest_framework import viewsets
 
 
+class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'slug'
+
+
+
+# Viewsets
+'''
 class ArticleViewSet(viewsets.ViewSet):
 
     def get_object(self, slug):
@@ -55,7 +66,7 @@ class ArticleViewSet(viewsets.ViewSet):
         article = self.get_object(pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+'''
 
 # Generic Class Based API Views
 '''
