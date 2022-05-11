@@ -16,15 +16,24 @@ from rest_framework import generics
 
 from rest_framework import viewsets
 
+# Model Viewsets
 
-class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
-                     mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+class ArticleViewSet(viewsets.ModelViewSet):
 
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     lookup_field = 'slug'
 
 
+# Generic Viewsets
+'''
+class ArticleViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin):
+
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    lookup_field = 'slug'
+'''
 
 # Viewsets
 '''
