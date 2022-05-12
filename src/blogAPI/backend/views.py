@@ -17,6 +17,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAuthor
 
 # Model Viewsets
 
@@ -26,8 +27,11 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     lookup_field = 'slug'
 
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAuthor]
     authentication_classes = (TokenAuthentication, SessionAuthentication)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 # Generic Viewsets
