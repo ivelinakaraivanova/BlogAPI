@@ -15,6 +15,8 @@ from rest_framework import mixins
 from rest_framework import generics
 
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Model Viewsets
 
@@ -23,6 +25,9 @@ class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
     lookup_field = 'slug'
+
+    permission_classes = [IsAuthenticated]
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
 
 
 # Generic Viewsets
