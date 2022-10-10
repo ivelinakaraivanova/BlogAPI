@@ -1,10 +1,8 @@
 from django.urls import path, include
-
-# from backend.views import ArticlesList, ArticleDetails
-
+# from .views import articles_list, article_details
+# from .views import ArticlesList, ArticleDetails
 from rest_framework.routers import DefaultRouter
 from .views import ArticleViewSet
-
 
 router = DefaultRouter()
 router.register('articles', ArticleViewSet, basename='articles')

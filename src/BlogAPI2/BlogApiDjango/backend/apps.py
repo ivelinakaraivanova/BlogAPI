@@ -7,4 +7,3 @@ class BackendConfig(AppConfig):
 
     def ready(self):
         import backend.signals
-

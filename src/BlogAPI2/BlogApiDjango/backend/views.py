@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from backend.models import Article
-from backend.serializers import ArticleSerializer
+from .models import Article
+from .serializers import ArticleSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -18,6 +18,7 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsAuthor
+
 
 # Model Viewsets
 

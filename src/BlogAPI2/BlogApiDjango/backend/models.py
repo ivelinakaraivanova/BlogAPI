@@ -14,7 +14,11 @@ class Article(models.Model):
     published = models.DateTimeField(
         auto_now_add=True
     )
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='articles')
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='articles'
+    )
 
     def __str__(self):
         return self.title
