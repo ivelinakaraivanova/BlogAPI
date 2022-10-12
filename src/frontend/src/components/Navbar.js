@@ -24,7 +24,7 @@ export function Navbar() {
                     {token
                         ?
                         <>
-                            <li className="nav-item active">
+                            <li className="nav-item">
                                 <Link to="/articles" className="nav-link">
                                     Home
                                 </Link>

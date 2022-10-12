@@ -7,10 +7,12 @@ import { Login } from './components/Login';
 import { ArticleDetails } from './components/ArticleDetails';
 import { AddArticle } from './components/AddArticle';
 import { Register } from './components/Register';
+import { UpdateArticle } from './components/UpdateArticle';
 
 function App() {
 
     const [articles, setArticles] = useState([]);
+    const [editArticle, setEditArticle] = useState('');
 
     const token = localStorage.getItem('myToken');
 
@@ -39,19 +41,40 @@ function App() {
     }, [token]);
 
     const insertedArticle = (article) => {
-        const new_articles = [...articles, article]
-        setArticles(new_articles)
+        const new_articles = [...articles, article];
+        setArticles(new_articles);
     }
 
+    const updatedArticles = (article) => {
+        const new_articles = articles.map(myArticle => {
+            if (myArticle.slug === article.slug) {
+                return article
+            } else {
+                return myArticle
+            }
+        });
+
+        setArticles(new_articles);
+    }
+
+    const updateBtn = (article) => {
+        setEditArticle(article)
+    }
+
+    const deleteBtn = (article) => {
+        const new_articles = articles.filter(myArticle => myArticle.slug !== article.slug)
+        setArticles(new_articles)
+    }
 
     return (
         <>
             <Navbar />
             <Routes>
                 <Route path='/' element={<Login />}></Route>
-                <Route path='/articles' element={<ArticleList articles={articles}/>}></Route>
-                <Route path='/articles/:slug' element={<ArticleDetails />}></Route>
+                <Route path='/articles' element={<ArticleList articles={articles} />}></Route>
+                <Route path='/articles/:slug' element={<ArticleDetails updateBtn={updateBtn} deleteBtn={deleteBtn} />}></Route>
                 <Route path='/add' element={<AddArticle insertedArticle={insertedArticle} />}></Route>
+                <Route path='/update' element={<UpdateArticle article={editArticle} updatedArticles={updatedArticles} />}></Route>
                 <Route path='/register' element={<Register />}></Route>
 
             </Routes>
