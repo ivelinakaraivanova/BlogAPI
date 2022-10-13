@@ -18,16 +18,6 @@ const register = () => {
 
     return (
         <div className="container mt-4">
-            {/* <br/>
-
-            {error 
-            ?
-                <div className="alert alert-warning allert-dismissible" role="alert">
-                    {error}
-                </div>    
-            : 
-                null
-        } */}
 
             <h1>
                 Register Here
