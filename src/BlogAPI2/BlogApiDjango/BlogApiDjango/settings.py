@@ -84,7 +84,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'BlogApiDjango.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://blogapifrontend22.herokuapp.com/",
 ]
 
 # Database
