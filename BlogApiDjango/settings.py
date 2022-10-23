@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 
     'backend',
 ]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['blogapi22.herokuapp.com']
 
 # Application definition
 
